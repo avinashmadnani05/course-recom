@@ -20,7 +20,7 @@ const handleSubmit = async (e) => {
     });
 
     // Fetch the recommendations for the user after saving input
-    const response = await axios.get(`http://localhost:3000/getRecommendations/${userId}`);
+    const response = await axios.get(`$(window.location.origin)`);
     setRecommendedCourses(response.data);  // Store the recommendations in state
   } catch (error) {
     console.error('Error fetching recommendations:', error);
