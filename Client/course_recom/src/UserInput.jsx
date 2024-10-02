@@ -12,7 +12,7 @@ const handleSubmit = async (e) => {
   e.preventDefault();
   try {
     // Save user input
-    await axios.post('http://localhost:3000/UserInput', {
+    await axios.post(`$(window.location.origin)`, {
       userId,
       interests,
       pastExperience,
