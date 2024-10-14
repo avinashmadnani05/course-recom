@@ -2,17 +2,18 @@
   "version": 2,
   "builds": [
     {
-      "src": ".js",
+      "src": "server/app.js",  // Adjust to your entry file for backend
       "use": "@vercel/node"
-    },
-    
+    }
   ],
   "routes": [
     {
-      "src": "*/(.*)",
-      "dest": "/"
+      "src": "/api/(.*)",  // API routes, adjust according to your app
+      "dest": "server/app.js"
     },
-  
-  ],
-  
+    {
+      "src": "/(.*)",  // All other routes to frontend
+      "dest": "/"
+    }
+  ]
 }
