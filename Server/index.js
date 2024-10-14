@@ -22,6 +22,9 @@ mongoose.connect('mongodb+srv://avinashmadnani05:avinash@cluster0.p0wo2.mongodb.
 });
 
 
+app.get('/test', (req, res) => {
+  res.send('Hello, World!');
+})
 app.post('/signup', (req, res) => {
   const { name, email, password } = req.body;
   const user = new recom_websiteModel({ name, email, password });
