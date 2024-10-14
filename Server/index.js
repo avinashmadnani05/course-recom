@@ -10,11 +10,15 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
-app.use(cors());
+app.use(cors(
+  {
+    origin:["http://courserecomghrcemn.app/"],
+    methods:["POST","GET"],
+    credentials: true
+  }
+));
 
-mongoose.connect('mongodb://127.0.0.1:27017/recom', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+mongoose.connect('mongodb+srv://avinashmadnani05:avinash@cluster0.p0wo2.mongodb.net/recom?retryWrites=true&w=majority&appName=Cluster0
 });
 
 
