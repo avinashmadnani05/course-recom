@@ -4,7 +4,7 @@ const cors = require('cors');
 const userinputModel = require('./models/users');
 const recom_websiteModel = require('./models/userdata');
 const { spawn } = require('child_process'); // To run Python script
-
+const path = require("path");
 
 const app = express();
 const port = 3000;
@@ -16,7 +16,6 @@ mongoose.connect('mongodb://127.0.0.1:27017/recom', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-
 
 app.post('/signup', (req, res) => {
   const { name, email, password } = req.body;
@@ -33,30 +32,16 @@ app.post('/login', (req, res) => {
     .then(user => {
       if (user) {
         if (user.password === password) {
-          res.json("success")
+          res.json("success");
         } else {
-          res.json("Incorrect Password")
+          res.json("Incorrect Password");
         }
       } else {
-        res.json("No user found")
+        res.json("No user found");
       }
     })
     .catch(err => res.status(500).json({ message: 'Error finding user', error: err }));
-})
-
-
-
-// app.post('/UserInput', async (req, res) => {
-//   try {
-//     const userInput = new userinputModel(req.body);
-//     await userInput.save();
-//     res.json({ message: 'User input saved successfully' });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: 'Error saving user input' });
-//   }
-// });
-
+});
 
 // User Input Route
 app.post('/UserInput', async (req, res) => {
@@ -77,7 +62,6 @@ app.post('/UserInput', async (req, res) => {
 
     python.on('close', (code) => {
       if (code === 0) {
-        // If the Python script ran successfully, return a success response
         res.json({ message: 'User input saved successfully and recommendations generated.' });
       } else {
         res.status(500).json({ message: 'Error running recommendation script.' });
@@ -88,25 +72,6 @@ app.post('/UserInput', async (req, res) => {
     res.status(500).json({ message: 'Error saving user input.' });
   }
 });
-
-// Add an endpoint to get the recommendations for the user
-// app.get('/getRecommendations/:userId', async (req, res) => {
-//   try {
-//     const userId = parseInt(req.params.userId);
-//     const recommendations = await db.collection('recommendations').findOne({ userId });
-
-//     if (recommendations) {
-//       res.json(recommendations.recommended_courses);
-//     } else {
-//       res.status(404).json({ message: 'No recommendations found for this user' });
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: 'Error fetching recommendations' });
-//   }
-// });
-
-// Add an endpoint to get the recommendations for the user
 
 // Example schema and model
 const RecommendationSchema = new mongoose.Schema({
@@ -132,10 +97,11 @@ app.get('/getRecommendations/:userId', async (req, res) => {
   }
 });
 
-
-
-
-
+// Serve React app
+app.use(express.static(path.resolve(__dirname, "Client/course_recom", "build"))); // Use __dirname correctly
+app.get("/", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "Client/course_recom", "build", "index.html")); // Use __dirname correctly
+});
 
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);

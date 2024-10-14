@@ -1,10 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Signup from './Signup';
+import Signup from './pages/Signup';
 import { BrowserRouter, Routes, Route} from "react-router-dom";
-import Login from './login';
-import Home from './Home';
-import UserInput from "./UserInput";
-
+import Login from './pages/login';
+import Domain from './pages/domain';
+import UserInput from './pages/UserInput';
+import User from './pages/user';
+import HomePage from './pages/Home';
 function App() {
   return (
   <>
@@ -16,8 +17,9 @@ function App() {
 
       <Route path="/login" element={<Login />} />
       <Route path="/UserInput" element={<UserInput />} />
-
-      <Route path="*" element={<Home />} />
+      <Route path="/domain" element={<Domain />} />
+      <Route path="/user" element={<User />} />
+      <Route path="*" element={<HomePage />} />
     </Routes>
     </BrowserRouter>
 </>
